@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
+using namespace std;
 
 class User {
 	string id;
@@ -16,4 +18,5 @@ public:
 		this->id = id;
 		this->pw = pw;
 	}
+	
 };

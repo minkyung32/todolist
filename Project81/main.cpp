@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <sstream>
 #include <vector>
 
 using namespace std;
@@ -38,7 +37,7 @@ int main() {
 	while (1) {
 		ifstream fin("user_id.txt");
 		if (!fin) {
-			cout << "파일을 열 수 없습니다." << endl;
+			cout << "File not Found" << endl;
 		}
 		fileRead(user_id, fin); //파일 라인별로 읽기
 		fin.close();
@@ -51,8 +50,7 @@ int main() {
 
 		if (search(user_id, id)) {
 			if (search(user_id, pw)) {
-				//id, pw 일치
-				//"로그인 성공";
+				//id, pw correct
 
 			//	ur.addUser(id, pw);
 			//em.addEmployee(new FulltimeWorker("이제훈", 10000, 300));
@@ -66,35 +64,35 @@ int main() {
 				while (1) {
 					int sel;
 					cout << "---To Do List---" << endl;
-					cout << "1. 할 일 추가" << endl;
-					cout << "2. 할 일 수정" << endl;
-					cout << "3. 할 일 삭제" << endl;
-					cout << "9. 종료" << endl;
+					cout << "1. add" << endl;
+					cout << "2. modify" << endl;
+					cout << "3. delete" << endl;
+					cout << "9. exit" << endl;
 					cout << "----------------" << endl;
 					cout << ">>";
 					cin >> sel; getchar();
 					if (sel == 1)
-						cout << "추가" << endl;
+						cout << "add" << endl;
 					else if (sel == 2)
-						cout << "수정" << endl;
+						cout << "mod" << endl;
 					else if (sel == 3)
-						cout << "삭제" << endl;
+						cout << "delete" << endl;
 					else if (sel == 9) break;
-					else cout << "잘못된 입력" << endl;
+					else cout << "wrong" << endl;
 				}
 			}
 			else
 			{
-				cout << "패스워드가 일치하지 않습니다." << endl;
+				cout << "password is not correct" << endl;
 				continue;
 			}
 		}
 		else {
-			cout << "신규 가입자입니다. 로그인 하세요." << endl;
+			cout << "New User. Login again" << endl;
 			//vector 에 push
 			ofstream fout("user_id.txt", ios::out | ios::app);
 			if (!fout) {
-				cout << "열기 실패" << endl;
+				cout << "File not Found" << endl;
 				return 0;
 			}
 			fout << id << ':' << pw << endl;
