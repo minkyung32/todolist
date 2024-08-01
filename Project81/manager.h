@@ -4,8 +4,8 @@
 class Manager {
     vector<User*> v;
 public:
-    void registMember(ofstream& fout,string id,string pw);
-    void modifyPw(ofstream& fout,string id,string pw);
+    void registMember(ofstream& fout);
+    void modifyPw(ifstream& fin,ofstream& fout);
     void deleteMember(ofstream& fout, string id);
     void searchMember(ofstream& fout, string id);
 };
