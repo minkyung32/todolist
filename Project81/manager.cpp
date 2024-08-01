@@ -1,25 +1,27 @@
 #include "manager.h"
 
-void Manager::registMember(ofstream& fout) {
+void Manager::registMember() {
     cout << "New User Regist" << endl;
     cout << "Enter ID >> ";
     string id,pw;
     getline(cin,id);
     cout << "Enter PW >> ";
     getline(cin,pw);
-
+    
+    ofstream fout;
     fout.open("user_id.txt", ios::out | ios::app);
     // fout("user_id.txt", ios::out | ios::app);
     if (!fout) {
         cout << "File not Found" << endl;
         return;
     }
-    fout << id << ':' << pw << endl;
+    fout << id << ';' << pw << ':';
     cout<<"회원 추가 성공"<<endl;
     fout.close();
 }
 
-void Manager::modifyPw(ifstream& fin,ofstream& fout) {
+void Manager::modifyPw() {
+    ifstream fin;
     fin.open("user_id.txt");
 
     if (!fin) {
@@ -27,13 +29,13 @@ void Manager::modifyPw(ifstream& fin,ofstream& fout) {
         exit(0);
     }
     cout<<"수정할 아이디를 입력하세요. >> ";
-    string id,str="";
+    string id,str="",cid="",cpw="";
     getline(cin,id);
-    int c;
+    int c,fpos=-1;
     while( (c=fin.get()) != EOF ) {
         if ((char)c == ':') {
-            string cid="",cpw="";
             bool isID=true;
+            cid="",cpw="";
             for (char a: str) {
                 if (a == ';') {
                     isID = false;
@@ -51,6 +53,8 @@ void Manager::modifyPw(ifstream& fin,ofstream& fout) {
                 cout<<"수정할 수 있음"<<endl;
                 cout<<cid << " " << cpw<<endl;
                 cout<<fin.tellg()<<endl;
+                fpos = fin.tellg();
+                break;
             }
             str = "";
         }
@@ -58,8 +62,26 @@ void Manager::modifyPw(ifstream& fin,ofstream& fout) {
             str.append(1,(char)c);
         }
     }
-    cout<<"수정 종료"<<endl;
     fin.close();
+    if (fpos == -1) {
+        cout<<"수정할 아이디가 존재하지 않습니다."<<endl;
+    }
+    else {
+        fstream f;
+        f.open("user_id.txt",ios::in |ios::out);
+
+        if (!f) {
+            cout << "유저 정보 접근 실패";
+            exit(0);
+        }
+        f.seekp(fpos-(cpw.length()));
+        cout<<"변경할 비밀번호를 입력하세요. >> ";
+        string pw,str="";
+        getline(cin,pw);
+        f << pw;
+    }
+
+
 }
 void deleteMember(ofstream& fout, string id) {
 

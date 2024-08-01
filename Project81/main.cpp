@@ -15,8 +15,9 @@ enum loginState {
 };
 
 
-bool registUser(string id,string pw,ofstream& of) {
-    of.open("user_id.txt",ios::app);
+bool registUser(string id,string pw) {
+    ofstream of;
+	of.open("user_id.txt",ios::app);
     if (!of) {
         cout << "접근 실패로 인해 유저 등록 실패";
         return false;
@@ -27,79 +28,61 @@ bool registUser(string id,string pw,ofstream& of) {
     return true;
 }
 
-void userAction(ofstream& fout,ifstream& fin,string id) {
+void userAction(int isManager) {
     int mode;
-	if (id == "admin") {
-	exit(0);
-
-    User ur; //------------------------------
-
+	
 	if (isManager == 1) {
 		while(1) {
+			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회"<<endl;
 			Manager m;
 			cin >> mode;
 			cin.ignore();
 			switch (mode) {
 			case 0:
 				cout << "추가"<<endl;
-				m.registMember(fout);
+				m.registMember();
 				break;
 			case 1:
-				cout << "수정";
-				m.modifyPw(fin,fout);
+				cout << "수정"<<endl;
+				m.modifyPw();
 				break;
 			case 2:
-				cout << "삭제";
+				cout << "삭제"<<endl;
 				break;
 			case 3:
-				cout << "조회";
+				cout << "조회"<<endl;
 				break;
 			default:
-				cout<<"종료";
+				cout<<"종료"<<endl;
 			}
    		}
 	}
 	else {
+		User ur; //------------------------------
 		while(1) {
-		cin >> mode;
-        switch (mode) {
-        case 0:
-            cout << "추가" << endl;
-			// of.open(id.append(".txt"),ios::app);
-			// if (!of) {
-			// 	cout << "접근 실패로 인해 유저 등록 실패";
-			// 	return;
-			// }
-			// of << "hello";
-			// of.close();
-            break;
-        case 1:
-            cout << "수정"<<endl;
-            break;
-        case 2:
-            cout << "삭제"<<endl;
-            break;
-        case 3:
-            cout << "조회"<<endl;
-            cout << "추가";
-            ur.addList();
-            break;
-        case 1:
-            cout << "수정";
-            ur.modList();
-            break;
-        case 2:
-            cout << "삭제";
-            ur.delList();
-            break;
-        case 3:
-            cout << "조회";
-            ur.showList();
-            break;
-        default:
-            cout<<"종료"<<endl;
-        }
-    }
+			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회"<<endl;
+			cin >> mode;
+			switch (mode) {
+			case 0:
+				cout << "추가"<<endl;
+				ur.addList();
+				break;
+			case 1:
+				cout << "수정"<<endl;
+				ur.modList();
+				break;
+			case 2:
+				cout << "삭제"<<endl;
+				ur.delList();
+				break;
+			case 3:
+				cout << "조회"<<endl;
+				ur.showList();
+				break;
+			default:
+				cout<<"종료"<<endl;
+			}
+    	}
 	}
     
     
@@ -164,28 +147,13 @@ int main()
             }
         }
         rf.close();
-		//****---------------------------------------- */
+		//****----------------------------------------****//
 
         switch(ls) {
             case isIng:
-            //회원가입 진행
-			cout<<"회원가입"<<endl;
-            if ( registUser(id,pw,of) ) {
-                userAction(of,rf,id);
-            }
-            else { 
-                // 유저 정보 오픈 실패
-                return -1;
-            }
-            break;
-            case isOK:
-				cout<<"로그인 성공"<<endl;
-                userAction(of,rf,id);
-            //로그인 성공
-            break;
-                //회원가입 진행
+            	//회원가입 진행
                 cout << "회원가입" << endl;
-                if (registUser(id, pw, of)) {
+                if (registUser(id, pw)) {
                     userAction(id == "admin" ? 1 : 0);
                 }
                 else {
