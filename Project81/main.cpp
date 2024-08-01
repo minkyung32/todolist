@@ -3,12 +3,15 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include "manager.h"
+#include "user.h"
 
 using namespace std;
 
 enum loginState {
     isIng,isOK,pwErr
 };
+
 
 bool registUser(string id,string pw,ofstream& of) {
     of.open("user_id.txt",ios::app);
@@ -22,55 +25,65 @@ bool registUser(string id,string pw,ofstream& of) {
     return true;
 }
 
-void userAction(int isManager) {
+void userAction(ofstream& fout,ifstream& fin,string id) {
     int mode;
-	exit(0);
-
-	if (isManager == 1) {
+	if (id == "admin") {
 		while(1) {
-		cin >> mode;
-        switch (mode) {
-        case 0:
-            cout << "추가";
-            break;
-        case 1:
-            cout << "수정";
-            break;
-        case 2:
-            cout << "삭제";
-            break;
-        case 3:
-            cout << "조회";
-            break;
-        default:
-            cout<<"종료";
-        }
-    }
+			Manager m;
+			cin >> mode;
+			cin.ignore();
+			switch (mode) {
+			case 0:
+				cout << "추가"<<endl;
+				m.registMember(fout);
+				break;
+			case 1:
+				cout << "수정";
+				m.modifyPw(fin,fout);
+				break;
+			case 2:
+				cout << "삭제";
+				break;
+			case 3:
+				cout << "조회";
+				break;
+			default:
+				cout<<"종료";
+			}
+   		}
 	}
 	else {
 		while(1) {
 		cin >> mode;
         switch (mode) {
         case 0:
-            cout << "추가";
+            cout << "추가" << endl;
+			// of.open(id.append(".txt"),ios::app);
+			// if (!of) {
+			// 	cout << "접근 실패로 인해 유저 등록 실패";
+			// 	return;
+			// }
+			// of << "hello";
+			// of.close();
             break;
         case 1:
-            cout << "수정";
+            cout << "수정"<<endl;
             break;
         case 2:
-            cout << "삭제";
+            cout << "삭제"<<endl;
             break;
         case 3:
-            cout << "조회";
+            cout << "조회"<<endl;
             break;
         default:
-            cout<<"종료";
+            cout<<"종료"<<endl;
         }
     }
 	}
     
     
 }
+
 
 
 int main()
@@ -98,12 +111,13 @@ int main()
 
         int c;
         
-        string str = "",cid="",cpw="";
+        string str = "";
 
         while( (c=rf.get()) != EOF ) {
             if ((char)c == ':') {
+				string cid="",cpw="";
                 bool isID=true;
-                for (auto a: str) {
+                for (char a: str) {
                     if (a == ';') {
                         isID = false;
                         continue;
@@ -136,19 +150,16 @@ int main()
             //회원가입 진행
 			cout<<"회원가입"<<endl;
             if ( registUser(id,pw,of) ) {
-				if (id == "admin") {
-					
-				}
-                userAction(id == "admin" ? 1:0);
+                userAction(of,rf,id);
             }
-            else {
+            else { 
                 // 유저 정보 오픈 실패
                 return -1;
             }
             break;
             case isOK:
 				cout<<"로그인 성공"<<endl;
-                userAction(id == "admin" ? 1:0);
+                userAction(of,rf,id);
             //로그인 성공
             break;
             case pwErr:
@@ -160,6 +171,5 @@ int main()
             // 나오면 안되는 에러 상황
         }
     }
-    
     return 0;
 }
