@@ -1,7 +1,1 @@
-kang:1234
-park:1
-lee:3
-kim:3
-yoon:55
-th1234:hh5678
-tt1:1212
+yooncc1;123123:
