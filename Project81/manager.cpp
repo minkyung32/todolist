@@ -74,11 +74,12 @@ void Manager::modifyPw() {
             cout << "유저 정보 접근 실패";
             exit(0);
         }
-        f.seekp(fpos-(cpw.length()));
+        f.seekp(fpos-1);
         cout<<"변경할 비밀번호를 입력하세요. >> ";
         string pw,str="";
         getline(cin,pw);
-        f << pw;
+        for (int i=0;i<cpw.length();i++)
+            f << '\b';
     }
 
 
