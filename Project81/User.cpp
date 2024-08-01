@@ -1,7 +1,7 @@
 #include "user.h"
 
 User::User() {
-
+	fileIn();
 }
 User::User(string id, string pw) {
 	this->id = id;
@@ -53,7 +53,7 @@ void User::showList() { //view, fileout
 	//(인덱스+1)번으로 출력
 	//인덱스가 2면 3. ~~~ 로 출력됨
 }
-void User::fileIn() {
+void User::fileIn() { //로그인 시 호출
 	addr = id + ".txt";
 	ifstream fin(addr, ios::app);
 
@@ -68,8 +68,8 @@ void User::fileIn() {
 	}
 	fin.close();
 }
-void User::fileOut() {
-	ofstream fout(addr, ios::trunc); //|ios::app (이어쓰기)
+void User::fileOut() { //로그아웃할때마다 호출
+	ofstream fout(addr, ios::trunc); //덮어쓰기
 	if (!fout) {
 		cout << "File not Found" << endl;
 		exit(1);
