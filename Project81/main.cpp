@@ -8,6 +8,8 @@
 
 using namespace std;
 
+#include "user.h"
+
 enum loginState {
     isIng,isOK,pwErr
 };
@@ -28,6 +30,11 @@ bool registUser(string id,string pw,ofstream& of) {
 void userAction(ofstream& fout,ifstream& fin,string id) {
     int mode;
 	if (id == "admin") {
+	exit(0);
+
+    User ur; //------------------------------
+
+	if (isManager == 1) {
 		while(1) {
 			Manager m;
 			cin >> mode;
@@ -74,6 +81,20 @@ void userAction(ofstream& fout,ifstream& fin,string id) {
             break;
         case 3:
             cout << "조회"<<endl;
+            cout << "추가";
+            ur.addList();
+            break;
+        case 1:
+            cout << "수정";
+            ur.modList();
+            break;
+        case 2:
+            cout << "삭제";
+            ur.delList();
+            break;
+        case 3:
+            cout << "조회";
+            ur.showList();
             break;
         default:
             cout<<"종료"<<endl;
@@ -162,10 +183,25 @@ int main()
                 userAction(of,rf,id);
             //로그인 성공
             break;
+                //회원가입 진행
+                cout << "회원가입" << endl;
+                if (registUser(id, pw, of)) {
+                    userAction(id == "admin" ? 1 : 0);
+                }
+                else {
+                    // 유저 정보 오픈 실패
+                    return -1;
+                }
+                break;
+            case isOK:
+				cout<<"로그인 성공"<<endl;
+                userAction(id == "admin" ? 1:0);
+                //로그인 성공
+                break;
             case pwErr:
-            // 아이디는 맞았는데 비밀번호가 틀림
-            cout<<"비밀번호가 틀립니다 !!"<<endl;
-            break;
+                // 아이디는 맞았는데 비밀번호가 틀림
+                cout<<"비밀번호가 틀립니다 !!"<<endl;
+                break;
             default:
                 return -2;
             // 나오면 안되는 에러 상황
