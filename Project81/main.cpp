@@ -5,21 +5,7 @@
 #include <vector>
 
 using namespace std;
-class User {
-	string id;
-	string pw;
-	vector<string> list;
-public:
-	User() {}
-	User(string id, string pw);
-	~User();
-	string getID();
-	string getPW();
-	void addUser(string id, string pw) {
-		this->id = id;
-		this->pw = pw;
-	}
-};
+#include "user.h"
 
 void fileRead(vector<string>& v, ifstream& fin) {
 	string line;
