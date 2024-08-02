@@ -1,3 +1,4 @@
-go back
-school
-home
+meet friend
+eat pizza
+exercise
+drink water
