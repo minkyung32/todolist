@@ -7,7 +7,6 @@ void Manager::registMember() {
     getline(cin,id);
     cout << "Enter PW >> ";
     getline(cin,pw);
-    
     ofstream fout;
     fout.open("user_id.txt", ios::out | ios::app);
     // fout("user_id.txt", ios::out | ios::app);
@@ -29,7 +28,7 @@ void Manager::modifyPw() {
         exit(0);
     }
     cout<<"수정할 아이디를 입력하세요. >> ";
-    string id,str="",cid="",cpw="";
+    string id,str="",str2="",cid="",cpw="";
     getline(cin,id);
     int c,fpos=-1;
     while( (c=fin.get()) != EOF ) {
@@ -50,9 +49,6 @@ void Manager::modifyPw() {
             }
             if (id == cid) {
                 // 수정할 아이디가 있음
-                cout<<"수정할 수 있음"<<endl;
-                cout<<cid << " " << cpw<<endl;
-                cout<<fin.tellg()<<endl;
                 fpos = fin.tellg();
                 break;
             }
@@ -67,26 +63,148 @@ void Manager::modifyPw() {
         cout<<"수정할 아이디가 존재하지 않습니다."<<endl;
     }
     else {
-        fstream f;
-        f.open("user_id.txt",ios::in |ios::out);
+        ifstream fin;
+        fin.open("user_id.txt");
 
-        if (!f) {
+        if (!fin) {
             cout << "유저 정보 접근 실패";
             exit(0);
         }
-        f.seekp(fpos-1);
         cout<<"변경할 비밀번호를 입력하세요. >> ";
         string pw,str="";
         getline(cin,pw);
-        for (int i=0;i<cpw.length();i++)
-            f << '\b';
+        fin.seekg(0,ios::beg);
+        str = "";
+        
+        for (int i=0;i<fpos-(cpw.length()+1);i++) {
+            c = fin.get();
+            str.append(1,(char)c);
+        }
+        str.append(pw);
+        fin.seekg(cpw.length(),ios::cur);
+
+        while( (c=fin.get()) != EOF ) {
+            str.append(1,(char)c);
+        }
+        fin.close();
+
+        ofstream fout;
+        fout.open("user_id.txt");
+        if (!fout) {
+            cout << "유저 정보 접근 실패";
+            exit(0);
+        }
+        fout << str;
+        fout.close();
     }
 
 
 }
-void deleteMember(ofstream& fout, string id) {
+void Manager::deleteMember() {
+    ifstream fin;
+    fin.open("user_id.txt");
 
+    if (!fin) {
+        cout << "유저 정보 접근 실패";
+        exit(0);
+    }
+    cout<<"삭제할 아이디를 입력하세요. >> ";
+    string id,str="",str2="",cid="",cpw="";
+    getline(cin,id);
+    int c,fpos=-1;
+    while( (c=fin.get()) != EOF ) {
+        if ((char)c == ':') {
+            bool isID=true;
+            cid="",cpw="";
+            for (char a: str) {
+                if (a == ';') {
+                    isID = false;
+                    continue;
+                }
+                if (isID) {
+                    cid.append(1,a);
+                }
+                else {
+                    cpw.append(1,a);
+                }
+            }
+            if (id == cid) {
+                // 삭제할 아이디가 있음
+                fpos = fin.tellg();
+                break;
+            }
+            str = "";
+        }
+        else {
+            str.append(1,(char)c);
+        }
+    }
+    fin.close();
+    if (fpos == -1) {
+        cout<<"삭제할 아이디가 존재하지 않습니다."<<endl;
+    }
+    else {
+        ifstream fin;
+        fin.open("user_id.txt");
+
+        if (!fin) {
+            cout << "유저 정보 접근 실패";
+            exit(0);
+        }
+        fin.seekg(0,ios::beg);
+        str = "";
+        
+        for (int i=0;i<fpos-(id.length()+cpw.length()+2);i++) {
+            c = fin.get();
+            str.append(1,(char)c);
+        }
+        fin.seekg(id.length()+cpw.length()+2,ios::cur);
+
+        while( (c=fin.get()) != EOF ) {
+            str.append(1,(char)c);
+        }
+        fin.close();
+        cout<<str<<endl;
+
+        ofstream fout;
+        fout.open("user_id.txt");
+        if (!fout) {
+            cout << "유저 정보 접근 실패";
+            exit(0);
+        }
+        fout << str;
+        fout.close();
+    }
 }
-void searchMember(ofstream& fout, string id) {
+void Manager::searchMember() {
+    ifstream fin;
+    fin.open("user_id.txt");
 
+    if (!fin) {
+        cout << "유저 정보 접근 실패";
+        exit(0);
+    }
+    string str="",cid="";
+    
+    int c;
+    while( (c=fin.get()) != EOF ) {
+        if ((char)c == ':') {
+            bool isID=true;
+            for (char a: str) {
+                if (a == ';') {
+                    isID = false;
+                    cid.append(1,',');
+                    continue;
+                }
+                if (isID) {
+                    cid.append(1,a);
+                }
+            }
+            str = "";
+        }
+        else {
+            str.append(1,(char)c);
+        }
+    }
+    cout<<cid<<endl;
 }

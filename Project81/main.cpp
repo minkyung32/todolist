@@ -33,7 +33,7 @@ void userAction(int isManager) {
 	
 	if (isManager == 1) {
 		while(1) {
-			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회"<<endl;
+			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회, 그 외. 나가기"<<endl;
 			Manager m;
 			cin >> mode;
 			cin.ignore();
@@ -48,12 +48,15 @@ void userAction(int isManager) {
 				break;
 			case 2:
 				cout << "삭제"<<endl;
+                m.deleteMember();
 				break;
 			case 3:
 				cout << "조회"<<endl;
+                m.searchMember();
 				break;
 			default:
 				cout<<"종료"<<endl;
+                return;
 			}
    		}
 	}
