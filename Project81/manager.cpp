@@ -7,7 +7,6 @@ void Manager::registMember() {
     getline(cin,id);
     cout << "Enter PW >> ";
     getline(cin,pw);
-
     ofstream fout;
     fout.open("user_id.txt", ios::out | ios::app);
     // fout("user_id.txt", ios::out | ios::app);
@@ -34,8 +33,8 @@ void Manager::modifyPw() {
     int c,fpos=-1;
     while( (c=fin.get()) != EOF ) {
         if ((char)c == ':') {
-            cid="",cpw="";
             bool isID=true;
+            cid="",cpw="";
             for (char a: str) {
                 if (a == ';') {
                     isID = false;

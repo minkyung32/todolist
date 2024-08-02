@@ -1,7 +1,7 @@
 #include "user.h"
 
 User::User() {
-
+	fileIn();
 }
 User::User(string id, string pw) {
 	this->id = id;
@@ -50,10 +50,10 @@ void User::delList() {
 void User::showList() { //view, fileout
 	for (int i = 0; i < list.size(); i++)
 		cout << i + 1 << ". " << list[i] << endl;
-	//(ÀÎµ¦½º+1)¹øÀ¸·Î Ãâ·Â
-	//ÀÎµ¦½º°¡ 2¸é 3. ~~~ ·Î Ãâ·ÂµÊ
+	//(ï¿½Îµï¿½ï¿½ï¿½+1)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	//ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ 3. ~~~ ï¿½ï¿½ ï¿½ï¿½Âµï¿½
 }
-void User::fileIn() {
+void User::fileIn() { //ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
 	addr = id + ".txt";
 	ifstream fin(addr, ios::app);
 
@@ -68,8 +68,8 @@ void User::fileIn() {
 	}
 	fin.close();
 }
-void User::fileOut() {
-	ofstream fout(addr, ios::trunc); //|ios::app (ÀÌ¾î¾²±â)
+void User::fileOut() { //ï¿½Î±×¾Æ¿ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
+	ofstream fout(addr, ios::trunc); //ï¿½ï¿½ï¿½î¾²ï¿½ï¿½
 	if (!fout) {
 		cout << "File not Found" << endl;
 		exit(1);
