@@ -17,7 +17,7 @@ string User::getPW() {
 	return pw;
 }
 void User::addList() {
-	fileIn();
+	cout << "******************" << endl;
 	cout << "Have to do>> ";
 	string todo;
 	getline(cin, todo);
@@ -26,31 +26,30 @@ void User::addList() {
 	fileOut();
 }
 void User::modList() {
-	fileIn();
 	showList();
+	cout << "******************" << endl;
 	cout << "Number to modify>> ";
 	int num;
-	cin >> num;
+	cin >> num; getchar();
 	cout << ">> ";
 	string mod;
 	getline(cin, mod);
-	list[num + 1] = mod;
+	list[num - 1] = mod;
 	fileOut();
 }
 void User::delList() {
-	fileIn();
 	showList();
 	int num;
+	cout << "******************" << endl;
 	cout << "Number to delete>> ";
-	cin >> num;
+	cin >> num; getchar();
 	vector<string>::iterator it;
+	it = list.begin();
 	int i = 0;
-	while (i < num) {
-		it++;
-		i++;
-	}
-	it = list.erase(it);
+	it = it + (num - 1);
+	list.erase(it);
 	fileOut();
+
 }
 void User::showList() { //view, fileout
 	fileIn();
@@ -67,6 +66,7 @@ void User::fileIn() {
 	}
 	else {
 		string line;
+		list.clear();
 		while (getline(fin, line))
 			list.push_back(line);
 	}
