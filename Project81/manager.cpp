@@ -9,7 +9,6 @@ void Manager::registMember() {
     getline(cin,pw);
     ofstream fout;
     fout.open("user_id.txt", ios::out | ios::app);
-    // fout("user_id.txt", ios::out | ios::app);
     if (!fout) {
         cout << "File not Found" << endl;
         return;
