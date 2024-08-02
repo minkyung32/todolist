@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -28,7 +28,7 @@ bool registUser(string id,string pw) {
     return true;
 }
 
-void userAction(int isManager) {
+void userAction(int isManager, string id, string pw) {
     int mode;
 	
 	if (isManager == 1) {
@@ -61,10 +61,10 @@ void userAction(int isManager) {
    		}
 	}
 	else {
-		User ur; //------------------------------
+        User ur(id, pw);
 		while(1) {
 			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회"<<endl;
-			cin >> mode;
+            cin >> mode; getchar();
 			switch (mode) {
 			case 0:
 				cout << "추가"<<endl;
@@ -157,7 +157,7 @@ int main()
             	//회원가입 진행
                 cout << "회원가입" << endl;
                 if (registUser(id, pw)) {
-                    userAction(id == "admin" ? 1 : 0);
+                    userAction((id == "admin" ? 1 : 0), id, pw);
                 }
                 else {
                     // 유저 정보 오픈 실패
@@ -166,7 +166,7 @@ int main()
                 break;
             case isOK:
 				cout<<"로그인 성공"<<endl;
-                userAction(id == "admin" ? 1:0);
+                userAction((id == "admin" ? 1:0), id, pw);
                 //로그인 성공
                 break;
             case pwErr:

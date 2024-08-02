@@ -1,7 +1,7 @@
 #include "user.h"
 
 User::User() {
-	fileIn();
+
 }
 User::User(string id, string pw) {
 	this->id = id;
@@ -17,14 +17,16 @@ string User::getPW() {
 	return pw;
 }
 void User::addList() {
+	fileIn();
 	cout << "Have to do>> ";
 	string todo;
 	getline(cin, todo);
 	list.push_back(todo);
 	showList();
-	//fout
+	fileOut();
 }
 void User::modList() {
+	fileIn();
 	showList();
 	cout << "Number to modify>> ";
 	int num;
@@ -33,8 +35,10 @@ void User::modList() {
 	string mod;
 	getline(cin, mod);
 	list[num + 1] = mod;
+	fileOut();
 }
 void User::delList() {
+	fileIn();
 	showList();
 	int num;
 	cout << "Number to delete>> ";
@@ -46,14 +50,14 @@ void User::delList() {
 		i++;
 	}
 	it = list.erase(it);
+	fileOut();
 }
 void User::showList() { //view, fileout
+	fileIn();
 	for (int i = 0; i < list.size(); i++)
 		cout << i + 1 << ". " << list[i] << endl;
-	//(�ε���+1)������ ���
-	//�ε����� 2�� 3. ~~~ �� ��µ�
 }
-void User::fileIn() { //�α��� �� ȣ��
+void User::fileIn() {
 	addr = id + ".txt";
 	ifstream fin(addr, ios::app);
 
@@ -68,8 +72,8 @@ void User::fileIn() { //�α��� �� ȣ��
 	}
 	fin.close();
 }
-void User::fileOut() { //�α׾ƿ��Ҷ����� ȣ��
-	ofstream fout(addr, ios::trunc); //�����
+void User::fileOut() {
+	ofstream fout(addr, ios::trunc);
 	if (!fout) {
 		cout << "File not Found" << endl;
 		exit(1);
