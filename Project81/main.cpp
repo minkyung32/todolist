@@ -114,7 +114,6 @@ int main()
         getline(cin,id);
         cout << "PW >> ";
         getline(cin,pw);
-        cout << id << " " << pw << endl;
 
         int c;
         
