@@ -17,17 +17,21 @@ string User::getPW() {
 	return pw;
 }
 void User::addList() {
-	cout << "******************" << endl;
+	showList();
+	cout << endl;
+	cout.width(7);
 	cout << "Have to do>> ";
 	string todo;
 	getline(cin, todo);
 	list.push_back(todo);
-	showList();
 	fileOut();
+	cout << "**Add List!**" << endl;
+	cout << endl;
 }
 void User::modList() {
 	showList();
-	cout << "******************" << endl;
+	cout << endl;
+	cout.width(7);
 	cout << "Number to modify>> ";
 	int num;
 	cin >> num; getchar();
@@ -36,11 +40,14 @@ void User::modList() {
 	getline(cin, mod);
 	list[num - 1] = mod;
 	fileOut();
+	cout << "**Modify List!**" << endl;
+	cout << endl;
 }
 void User::delList() {
 	showList();
 	int num;
-	cout << "******************" << endl;
+	cout << endl;
+	cout.width(7);
 	cout << "Number to delete>> ";
 	cin >> num; getchar();
 	vector<string>::iterator it;
@@ -49,12 +56,18 @@ void User::delList() {
 	it = it + (num - 1);
 	list.erase(it);
 	fileOut();
-
+	cout << "**Delete List!**" << endl;
+	cout << endl;
 }
 void User::showList() { //view, fileout
 	fileIn();
-	for (int i = 0; i < list.size(); i++)
+	cout << "------------ "<<id<<"'s------------" << endl;
+	cout << "----------To do List----------" << endl;
+	for (int i = 0; i < list.size(); i++) {
+		cout.width(10);
 		cout << i + 1 << ". " << list[i] << endl;
+	}
+	cout << "------------------------------" << endl;
 }
 void User::fileIn() {
 	addr = id + ".txt";

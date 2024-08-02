@@ -39,23 +39,18 @@ void userAction(int isManager, string id, string pw) {
 			cin.ignore();
 			switch (mode) {
 			case 0:
-				cout << "추가"<<endl;
 				m.registMember();
 				break;
 			case 1:
-				cout << "수정"<<endl;
 				m.modifyPw();
 				break;
 			case 2:
-				cout << "삭제"<<endl;
                 m.deleteMember();
 				break;
 			case 3:
-				cout << "조회"<<endl;
                 m.searchMember();
 				break;
 			default:
-				cout<<"종료"<<endl;
                 return;
 			}
    		}
@@ -63,27 +58,24 @@ void userAction(int isManager, string id, string pw) {
 	else {
         User ur(id, pw);
 		while(1) {
-			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회"<<endl;
+			cout<<"0. 추가, 1. 수정, 2. 삭제, 3. 조회 그 외. 나가기"<<endl;
             cin >> mode; getchar();
 			switch (mode) {
 			case 0:
-				cout << "추가"<<endl;
 				ur.addList();
 				break;
 			case 1:
-				cout << "수정"<<endl;
 				ur.modList();
 				break;
 			case 2:
-				cout << "삭제"<<endl;
 				ur.delList();
 				break;
 			case 3:
-				cout << "조회"<<endl;
 				ur.showList();
 				break;
 			default:
-				cout<<"종료"<<endl;
+				cout<<"Log Out"<<endl;
+                return;
 			}
     	}
 	}
